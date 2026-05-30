@@ -11,6 +11,7 @@ services:
       ROUTER_MAX_OUTPUT_CHARS: ${ROUTER_MAX_OUTPUT_CHARS:-4000}
       ROUTER_ALLOW_DOCKER_INSPECT: ${ROUTER_ALLOW_DOCKER_INSPECT:-1}
       ROUTER_LOG_LEVEL: ${ROUTER_LOG_LEVEL:-info}
+      ROUTER_BRIDGE_API_KEY: ${ROUTER_BRIDGE_API_KEY:-}
       PHASE1_BRIDGE_BASE_URL: ${PHASE1_BRIDGE_BASE_URL}
       PHASE1_BRIDGE_API_KEY: ${PHASE1_BRIDGE_API_KEY}
       PHASE1_FALLBACK_MODEL: ${PHASE1_FALLBACK_MODEL:-qwen2.5-coder:3b-instruct}
@@ -29,3 +30,13 @@ services:
       start_period: 15s
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - phase2_net
+      - phase1_shared
+
+networks:
+  phase2_net:
+    name: ${PHASE2_NETWORK:-glovewort_phase2_net}
+  phase1_shared:
+    external: true
+    name: ${BRAIN_HAND_NETWORK:-brain_hand_net}

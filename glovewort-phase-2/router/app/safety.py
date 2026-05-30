@@ -10,6 +10,7 @@ SAFE_EXACT_COMMANDS = {
     "whoami",
     "docker ps",
     "docker compose ps",
+    "docker-compose ps",
     "docker images",
     "df -h",
 }
@@ -92,7 +93,7 @@ def ensure_text_file(path: str) -> tuple[bool, str]:
 
 def docker_inspect_allowed(command: str) -> tuple[bool, str]:
     normalized = normalize_command(command)
-    if normalized in {"docker ps", "docker compose ps", "docker images"}:
+    if normalized in {"docker ps", "docker compose ps", "docker-compose ps", "docker images"}:
         return True, "allowed docker inspect command"
     return False, "docker command not allowed in phase-2A"
 
